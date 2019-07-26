@@ -1,0 +1,22 @@
+on: [push, pull-request]
+
+jobs:
+
+  run:
+    name: Validate GorillaStack config templates
+    container: hashicorp/terraform:light
+    runs-on: ubuntu-latest
+    actions:
+    - uses: actions/checkout@master
+    
+    - name: Install GorillaStack Terraform Provider
+      run: |
+        go get -d github.com/gorillastack/terraform-provider-gorillastack
+        cd $GOPATH/src/github.com/gorillastack/terraform-provider-gorillastack
+        make
+
+    - name: Initialize the Provider/templates
+      run: terraform init
+
+    - name: Validate Terraform templates
+      run: terraform validate
