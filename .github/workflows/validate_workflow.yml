@@ -10,10 +10,11 @@ jobs:
     - uses: actions/checkout@master
     
     - name: Install GorillaStack Terraform Provider
-      run: |
-        go get -d github.com/gorillastack/terraform-provider-gorillastack
-        cd $GOPATH/src/github.com/gorillastack/terraform-provider-gorillastack
-        make
+      run: go get -d github.com/gorillastack/terraform-provider-gorillastack
+    - name: Install GorillaStack Terraform Provider 1
+      run: cd $GOPATH/src/github.com/gorillastack/terraform-provider-gorillastack
+    - name: Install GorillaStack Terraform Provider 2
+      run: make
 
     - name: Initialize the Provider/templates
       run: terraform init
