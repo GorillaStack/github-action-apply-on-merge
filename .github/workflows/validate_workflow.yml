@@ -6,7 +6,7 @@ jobs:
     name: Validate GorillaStack config templates
     container: hashicorp/terraform:light
     runs-on: ubuntu-latest
-    actions:
+    steps:
     - uses: actions/checkout@master
     
     - name: Install GorillaStack Terraform Provider
