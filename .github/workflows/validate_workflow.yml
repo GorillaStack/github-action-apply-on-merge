@@ -4,7 +4,7 @@ jobs:
 
   run:
     name: Validate GorillaStack config templates
-    container: hashicorp/terraform:light
+    container: gorillastack/github-actions-base:latest
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
