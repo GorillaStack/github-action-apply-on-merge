@@ -1,7 +1,6 @@
 on: [push, pull-request]
 
 jobs:
-
   run:
     name: Validate GorillaStack config templates
     container: gorillastack/github-actions-base:latest
