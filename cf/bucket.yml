@@ -1,0 +1,32 @@
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+    DeletionPolicy: Retain
+  GHActionsTFUser:
+    Type: AWS::IAM::User
+    Properties: 
+      Policies: 
+        -
+          PolicyName: "GitHubActionsGorillaStack-tfstate_bucket_access_policy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action:
+                  - "s3:GetObject"
+                  - "s3:PutObject"
+                Resource:
+                  Fn::Join: 
+                    - ""
+                    - - "arn:aws:s3:::"
+                      - !Ref "S3Bucket"
+                      - "/"
+                      - "*"
+      UserName: github-actions-gorillastack-tfstate-user
+Outputs:
+  BucketName:
+    Value: !Ref 'S3Bucket'
+    Description: Name of the S3 bucket used to store the .tfstate

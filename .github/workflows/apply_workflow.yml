@@ -30,6 +30,26 @@ jobs:
 
     - name: Validate Terraform templates
       run: terraform validate
+    
+    - name: Retrieve .tfstate from S3
+      env:
+        STACK_NAME: github-actions-gorillastack-tfstate
+        AWS_ACCESS_KEY_ID: ${{ secret.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secret.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: us-east-1
+      run: |
+        BUCKET_NAME=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[0].Outputs[0].OutputValue" --output text)
+        aws s3 cp s3://$BUCKET_NAME/ . --include "*.tfstate"
 
     - name: Apply Terraform templates
       run: terraform apply -auto-approve -var="api_key=${{ secrets.GORILLASTACK_API_KEY }}" -var="team_id=${{ secrets.GORILLASTACK_TEAM_ID }}"
+
+    - name: Upload .tfstate to S3
+      env:
+        STACK_NAME: github-actions-gorillastack-tfstate
+        AWS_ACCESS_KEY_ID: ${{ secret.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secret.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: us-east-1
+      run: |
+        BUCKET_NAME=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[0].Outputs[0].OutputValue" --output text)
+        aws s3 cp terraform.tfstate s3://$BUCKET_NAME/ 
