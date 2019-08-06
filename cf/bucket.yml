@@ -16,6 +16,15 @@ Resources:
               -
                 Effect: "Allow"
                 Action:
+                  - "s3:ListBucket"
+                Resource:
+                  Fn::Join: 
+                    - ""
+                    - - "arn:aws:s3:::"
+                      - !Ref "S3Bucket"
+              -
+                Effect: "Allow"
+                Action:
                   - "s3:GetObject"
                   - "s3:PutObject"
                 Resource:
@@ -25,6 +34,11 @@ Resources:
                       - !Ref "S3Bucket"
                       - "/"
                       - "*"
+              -
+                Effect: "Allow"
+                Action:
+                  - "cloudformation:DescribeStacks"
+                Resource: !Ref AWS::StackId
       UserName: github-actions-gorillastack-tfstate-user
 Outputs:
   BucketName:
