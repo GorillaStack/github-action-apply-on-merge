@@ -1,14 +1,11 @@
 on:
   push:
-    paths:
-      - "*.tf"
-  pull-request:
     branches:
       - master
 
 jobs:
   run:
-    name: Validate GorillaStack config templates
+    name: Apply GorillaStack config templates
     container: gorillastack/github-actions-base:latest
     runs-on: ubuntu-latest
     steps:
@@ -33,3 +30,6 @@ jobs:
 
     - name: Validate Terraform templates
       run: terraform validate
+
+    - name: Apply Terraform templates
+      run: terraform apply -var="api_key=${{ secrets.GORILLASTACK_API_KEY }}" -var="team_id=${{ secrets.GORILLASTACK_TEAM_ID }}"
