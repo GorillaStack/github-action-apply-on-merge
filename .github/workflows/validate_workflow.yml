@@ -6,8 +6,6 @@ jobs:
     container: gorillastack/github-actions-base:latest
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-
     - name: Dump some environment info
       run: |
         env
@@ -15,11 +13,14 @@ jobs:
         terraform --version
         ls
     
-    - name: Install GorillaStack Terraform Provider
+    - name: Update the GorillaStack Terraform Provider Version
       run: |
         go get -d github.com/gorillastack/terraform-provider-gorillastack
         cd $GOPATH/src/github.com/gorillastack/terraform-provider-gorillastack
         make
+
+    - name: Check out code
+      uses: actions/checkout@master
 
     - name: Initialize the Provider/templates
       run: terraform init
