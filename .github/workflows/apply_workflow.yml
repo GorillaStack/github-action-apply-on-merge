@@ -32,4 +32,4 @@ jobs:
       run: terraform validate
 
     - name: Apply Terraform templates
-      run: terraform apply
+      run: terraform apply -var="api_key=${{ secrets.GORILLASTACK_API_KEY }}" -var="team_id=${{ secrets.GORILLASTACK_TEAM_ID }}"
