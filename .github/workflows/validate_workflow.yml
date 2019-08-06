@@ -10,6 +10,7 @@ jobs:
 
     - name: Dump some environment info
       run: |
+        env
         go version
         terraform --version
         ls
