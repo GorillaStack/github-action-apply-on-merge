@@ -39,14 +39,10 @@ jobs:
         AWS_DEFAULT_REGION: us-east-1
       run: |
         BUCKET_NAME=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[0].Outputs[0].OutputValue" --output text)
-        aws s3 cp s3://$BUCKET_NAME/ . --include "*.tfstate"
+        aws s3 cp s3://$BUCKET_NAME/terraform.tfstate . || true
 
     - name: Apply Terraform templates
-      run: |
-        terraform apply -auto-approve -var="api_key=${{ secrets.GORILLASTACK_API_KEY }}" -var="team_id=${{ secrets.GORILLASTACK_TEAM_ID }}"
-        pwd
-        ls -ltra
-        cat terraform.tfstate
+      run: terraform apply -auto-approve -var="api_key=${{ secrets.GORILLASTACK_API_KEY }}" -var="team_id=${{ secrets.GORILLASTACK_TEAM_ID }}"
 
     - name: Upload .tfstate to S3
       env:
@@ -55,8 +51,5 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: us-east-1
       run: |
-        pwd
-        ls -ltra
-        cat terraform.tfstate
         BUCKET_NAME=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[0].Outputs[0].OutputValue" --output text)
         aws s3 cp terraform.tfstate s3://$BUCKET_NAME/ 
