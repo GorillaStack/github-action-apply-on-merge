@@ -10,4 +10,4 @@ jobs:
       uses: actions/checkout@master
 
     - name: Validate templates
-      uses: './action'
+      uses: './'

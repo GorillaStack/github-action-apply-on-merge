@@ -14,7 +14,7 @@ jobs:
       uses: actions/checkout@master
 
     - name: Apply templates
-      uses: './action'
+      uses: './'
       with:
         action: apply
       env:
