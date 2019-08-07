@@ -3,7 +3,6 @@ on: [push]
 jobs:
   run:
     name: Validate GorillaStack config templates
-    container: gorillastack/github-actions-base:latest
     runs-on: ubuntu-latest
     steps:
     - name: Check out code

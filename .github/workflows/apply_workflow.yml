@@ -6,7 +6,6 @@ on:
 jobs:
   run:
     name: Apply GorillaStack config templates
-    container: gorillastack/github-actions-base:latest
     runs-on: ubuntu-latest
     steps:
 
