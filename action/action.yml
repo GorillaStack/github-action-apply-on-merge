@@ -1,0 +1,19 @@
+name: 'Terraform Apply for GorillaStack'
+description: 'Cost-Optimization, Backup & Security Alerting for the AWS Cloud with Terraform templates living in your repository'
+branding:
+  icon: 'layers'
+  color: 'orange'
+inputs: 
+  action:
+    description: 'The action type (currently "validate" and "apply" are available)'
+    required: true
+    default: 'validate'
+runs:
+  using: 'docker'
+  image: 'docker://gorillastack/github-actions-base:latest'
+  args:
+  - '${{ inputs.action }}'
+  entrypoint: "/opt/action.sh"
+  # entrypoint: string
+  # env:
+  #   string: string
