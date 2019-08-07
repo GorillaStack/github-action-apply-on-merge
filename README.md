@@ -22,11 +22,12 @@ aws cloudformation deploy \
 
 #### Deploy via AWS Console
 
-Go to this URL to launch the AWS CloudFormation Console with a link to the template and stack name specified.
+Click this button launch this stack in the AWS CloudFormation Console.
 
-https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?stackName=github-actions-gorillastack-tfstate&templateUrl=https%3A%2F%2Fgorillastack-cloudformation-templates.s3.amazonaws.com%2Fgithub-action-bucket-template.yml
+[![Launch Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?stackName=github-actions-gorillastack-tfstate&templateUrl=https%3A%2F%2Fgorillastack-cloudformation-templates.s3.amazonaws.com%2Fgithub-action-bucket-template.yml)
 
 You will need to check the box to confirm the creation of IAM resources in the template.
+
 
 ## Configuration - GitHub Secrets
 
@@ -54,15 +55,13 @@ aws iam create-access-key --user-name github-actions-gorillastack-tfstate-user
 
 or via AWS Console:
 
-1. Go to https://console.aws.amazon.com/iam/home?#/users/github-actions-gorillastack-tfstate-user?section=security_credentials
+1. [Navigate to the IAM User configuration for the github-actions-gorillastack-tfstate-user](https://console.aws.amazon.com/iam/home?#/users/github-actions-gorillastack-tfstate-user?section=security_credentials)
 1. Click on the "Create Access Key" button
 1. Copy the "Access Key Id" and "Secret Access Key" from the modal
 
 
-#### 2. Create GorillaStack API Key
+#### 2. Create GorillaStack API Key and finding your Team Id
 
-#### 3. Retrieve GorillaStack Team Id
-
-## Usage
+If you have not used the GorillaStack API yet, [please follow this documentation to generate a key and retrieve the Team Id](https://docs.gorillastack.com/docs/reference/api/overview).
 
 
