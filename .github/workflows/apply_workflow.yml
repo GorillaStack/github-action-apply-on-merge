@@ -9,47 +9,16 @@ jobs:
     container: gorillastack/github-actions-base:latest
     runs-on: ubuntu-latest
     steps:
-    - name: Dump some environment info
-      run: |
-        env
-        go version
-        terraform --version
-        ls
-    
-    - name: Update the GorillaStack Terraform Provider Version
-      run: |
-        go get -d github.com/gorillastack/terraform-provider-gorillastack
-        cd $GOPATH/src/github.com/gorillastack/terraform-provider-gorillastack
-        make
 
     - name: Check out code
       uses: actions/checkout@master
 
-    - name: Initialize the Provider/templates
-      run: terraform init
-
-    - name: Validate Terraform templates
-      run: terraform validate
-    
-    - name: Retrieve .tfstate from S3
+    - name: Apply templates
+      uses: './action'
+      with:
+        action: apply
       env:
         STACK_NAME: github-actions-gorillastack-tfstate
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: us-east-1
-      run: |
-        BUCKET_NAME=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[0].Outputs[0].OutputValue" --output text)
-        aws s3 cp s3://$BUCKET_NAME/$GITHUB_REPOSITORY/$GITHUB_REF/terraform.tfstate . || true
-
-    - name: Apply Terraform templates
-      run: terraform apply -auto-approve -var="api_key=${{ secrets.GORILLASTACK_API_KEY }}" -var="team_id=${{ secrets.GORILLASTACK_TEAM_ID }}"
-
-    - name: Upload .tfstate to S3
-      env:
-        STACK_NAME: github-actions-gorillastack-tfstate
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_DEFAULT_REGION: us-east-1
-      run: |
-        BUCKET_NAME=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[0].Outputs[0].OutputValue" --output text)
-        aws s3 cp terraform.tfstate s3://$BUCKET_NAME/$GITHUB_REPOSITORY/$GITHUB_REF/ 
