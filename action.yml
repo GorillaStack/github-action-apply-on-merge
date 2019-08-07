@@ -1,0 +1,8 @@
+name: 'Terraform Apply for GorillaStack'
+description: 'Cost-Optimization, Backup & Security Alerting for the AWS Cloud with Terraform templates living in your repository'
+branding:
+  icon: 'layers' # Icon to display on GitHub Marketplace
+  color: 'orange' # optional, decorates the entry in the GitHub Marketplace
+runs:
+  using: 'node12'
+  main: 'main.js'
