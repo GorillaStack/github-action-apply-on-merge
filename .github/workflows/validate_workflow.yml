@@ -1,9 +1,4 @@
-on:
-  push:
-      - "*"
-  pull-request:
-    branches:
-      - master
+on: [push]
 
 jobs:
   run:
