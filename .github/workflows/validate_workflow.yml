@@ -2,8 +2,6 @@ on:
   push:
     branches:
       - "!master"
-    paths:
-      - "*.tf"
   pull-request:
     branches:
       - master
