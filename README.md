@@ -69,7 +69,25 @@ If you have not used the GorillaStack API yet, [please follow this documentation
 
 Create workflow `.yml` files under `.github/workflows`, or integrate these steps into your own workflows.
 
-#### Validate templates on every push
+#### Inputs
+
+Use these inputs to customise the action. Some of the values are defaulted
+Input Name | Default | Required? | Description
+------------ | ------------- | ------------ | -------------
+action | validate | Y | Can be `validate` or `apply` to either validate or apply the templates in the repo 
+stack_name | github-actions-gorillastack-tfstate | N | If you customised the name of the stack when deploying it, please specify that name for the stack in this input
+aws_default_region | us-east-1 | N | If you deployed the stack in a region other than us-east-1, please specify it in this input
+aws_access_key_id | N/A | Only for `action=apply` | Set this to be `${{ secrets.AWS_ACCESS_KEY_ID }}`. See purpose in section above
+aws_secret_access_key | N/A | Only for `action=apply` | Set this to be `${{ secrets.AWS_SECRET_ACCESS_KEY }}`. See purpose in section above
+gorillastack_api_key | N/A | Only for `action=apply` | Set this to be `${{ secrets.GORILLASTACK_API_KEY }}`. See purpose in section above
+gorillastack_team_id | N/A | Only for `action=apply` | Set this to be `${{ secrets.GORILLASTACK_TEAM_ID }}`. See purpose in section above
+
+
+#### Outputs
+
+None.
+
+#### Example workflow: Validate templates on every push
 
 ```yaml
 on: [push]
@@ -86,7 +104,7 @@ jobs:
       uses: 'GorillaStack/github-action-apply-on-merge'
 ```
 
-#### Apply templates on every push to master
+#### Example workflow: Apply templates on every push to master
 
 ```yaml
 on:
