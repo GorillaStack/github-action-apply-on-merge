@@ -71,7 +71,8 @@ Create workflow `.yml` files under `.github/workflows`, or integrate these steps
 
 #### Inputs
 
-Use these inputs to customise the action. Some of the values are defaulted
+Use these inputs to customise the action.
+
 Input Name | Default | Required? | Description
 ------------ | ------------- | ------------ | -------------
 action | validate | Y | Can be `validate` or `apply` to either validate or apply the templates in the repo 
