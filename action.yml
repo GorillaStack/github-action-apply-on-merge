@@ -27,9 +27,11 @@ inputs:
   gorillastack_api_key:
     description: 'GorillaStack API Key, which is read-write or read-only, tied to your user identity'
     required: true
+    default: defaulted-for-everything-but-apply
   gorillastack_team_id:
     description: 'GorillaStack Team Id, sets context of which team/tenant you are targeting'
     required: true
+    default: defaulted-for-everything-but-apply
 runs:
   using: 'docker'
   image: 'docker://gorillastack/github-actions-base:latest'
