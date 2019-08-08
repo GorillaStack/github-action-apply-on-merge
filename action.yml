@@ -19,11 +19,11 @@ inputs:
   aws_access_key_id:
     description: 'The AWS Access Key Id for the user with privileges to access the tfstate bucket'
     required: true
-    default: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    default: defaulted-for-everything-but-apply
   aws_secret_access_key:
     description: 'The AWS Secret Access Key for the user with privileges to access the tfstate bucket'
     required: true
-    default: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    default: defaulted-for-everything-but-apply
   gorillastack_api_key:
     description: 'GorillaStack API Key, which is read-write or read-only, tied to your user identity'
     required: true

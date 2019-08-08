@@ -37,7 +37,7 @@ Secret Name | Purpose
 ------------ | -------------
 AWS_ACCESS_KEY_ID | AWS Creds required to access the created S3 bucket to store and retrieve tfstate
 AWS_SECRET_ACCESS_KEY | AWS Creds required to access the created S3 bucket to store and retrieve tfstate
-GORILLASTACK_API_KEY | GorillaStack API Key, read-write or read-only, tied to your user identity
+GORILLASTACK_API_KEY | GorillaStack API Key, scoped as read-write or read-only, tied to your user identity
 GORILLASTACK_TEAM_ID | GorillaStack Team Id, sets context of which team/tenant you are targeting
 
 Within your GitHub repository, navigate to `Settings > Secrets` to set the secrets for this action.
@@ -65,3 +65,48 @@ or via AWS Console:
 If you have not used the GorillaStack API yet, [please follow this documentation to generate a key and retrieve the Team Id](https://docs.gorillastack.com/docs/reference/api/overview).
 
 
+## Usage
+
+Create workflow `.yml` files under `.github/workflows`, or integrate these steps into your own workflows.
+
+#### Validate templates on every push
+
+```yaml
+on: [push]
+
+jobs:
+  run:
+    name: Validate GorillaStack config templates
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@master
+
+    - name: Validate templates
+      uses: 'GorillaStack/github-action-apply-on-merge'
+```
+
+#### Apply templates on every push to master
+
+```yaml
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  run:
+    name: Apply GorillaStack config templates
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Check out code
+      uses: actions/checkout@master
+
+    - name: Apply templates
+      uses: 'GorillaStack/github-action-apply-on-merge'
+      with:
+        action: apply
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+```
