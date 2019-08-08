@@ -34,6 +34,6 @@ inputs:
     default: defaulted-for-everything-but-apply
 runs:
   using: 'docker'
-  image: 'docker://gorillastack/github-actions-base:latest'
+  image: 'docker://gorillastack/github-actions-base:1'
   args:
   - '${{ inputs.action }}'
